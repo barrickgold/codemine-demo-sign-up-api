@@ -36,3 +36,14 @@ docker volume rm <your project name>_pgadmin
 
 ## Tooling
 - Docker
+
+## Nick
+Apply migrations for Knex :
+```
+knex migrate:latest --env development
+```
+
+If you would like our Seed Data (1 Demo, 9 Demo Entries) run the following:
+```
+knex seed:run --env development
+```

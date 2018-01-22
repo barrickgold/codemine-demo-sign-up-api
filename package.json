@@ -1,0 +1,33 @@
+{
+  "name": "codemine-demo-sign-up-api",
+  "version": "1.0.0",
+  "description": "Demo application API",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon ./src/server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barrickgold/codemine-demo-sign-up-api.git"
+  },
+  "keywords": [],
+  "author": "Nicholas Hill, Barrick Gold",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barrickgold/codemine-demo-sign-up-api/issues"
+  },
+  "homepage": "https://github.com/barrickgold/codemine-demo-sign-up-api#readme",
+  "dependencies": {
+    "knex": "^0.13.0",
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.2.1",
+    "pg": "^7.1.2",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0",
+    "nodemon": "^1.14.11"
+  }
+}
