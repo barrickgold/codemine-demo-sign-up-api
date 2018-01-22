@@ -18,8 +18,17 @@ function addEntry(entry) {
   .returning('*');
 };
 
+function updateEntry(entry) {
+  console.log("queries",entry);
+  return knex('demo_entry')
+  .update(entry)
+  .where({ demo_entry_id: entry.demo_entry_id })
+  .returning('*');
+};
+
 module.exports = {
     getAllDemoEntries,
     getSingleDemoEntry,
-    addEntry
+    addEntry,
+    updateEntry
 };

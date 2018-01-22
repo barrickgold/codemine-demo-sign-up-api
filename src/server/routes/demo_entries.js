@@ -51,4 +51,27 @@ router.get(`/`, async (ctx) => {
     }
   });
 
+  router.put(`/:entry_id`, async (ctx) => {
+    try {
+
+      const entry = await Entries.update(ctx.request.body);
+      if (entry) {
+        ctx.status = 200;
+        ctx.body = {
+          entry: entry
+        };
+      } else {
+        ctx.status = 404;
+        ctx.body = {
+          message: 'That movie does not exist.'
+        };
+      }
+    } catch (err) {
+      ctx.status = 400;
+      ctx.body = {
+        message: err.message || 'Sorry, an error has occurred.'
+      };
+    }
+  });
+
 module.exports = router;

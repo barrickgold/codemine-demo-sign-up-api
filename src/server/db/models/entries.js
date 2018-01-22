@@ -49,8 +49,26 @@ class Entries {
         return entry;
     };
 
+    async update(entryObject){
+        console.log("beforeModel", entryObject);
+        const newEntry = await this.convertEntry(entryObject);
+        console.log("afterModel", newEntry);
+        const sql = await queries.updateEntry(newEntry);
+        const entry = {
+            id: sql[0].demo_entry_id,
+            demoId: sql[0].demo_day_id,
+            name: sql[0].presenter_name,
+            title: sql[0].demo_title,
+            position: sql[0].position,
+            isDeleted: sql[0].is_deleted
+        };
+  
+        return entry;
+    };
+
     async convertEntry(entryObject){
         const entry =  {
+            demo_entry_id: entryObject.id,
             demo_day_id: entryObject.demoId,
             presenter_name: entryObject.name,
             demo_title: entryObject.title,
