@@ -14,6 +14,21 @@ With default values, the script above starts PostgreSQL on port `5432` and PGAdm
 
 If you are using PGAdmin4 for the first time (or after removing the volume), you have to log in again and set up your servers. To do that, right-click `Servers`, `Create` -> `Server...`. Give the server a name (such as `local`), go to the `Connection` tab and enter `db` as the `Host name/address`. Finally, the `Maintenance database`, `Username`, and `Password` are the same as your PostgreSQL values in your `.env` file.
 
+
+### Creating tables and seeding data
+
+Table structure is set up through Knex, you will need to run the following to ensure the schema.
+
+Apply migrations for Knex :
+```
+knex migrate:latest --env development
+```
+
+If you would like our Seed Data (1 Demo, 9 Demo Entries) run the following:
+```
+knex seed:run --env development
+```
+
 ## Stopping
 
 ### Database
@@ -36,14 +51,3 @@ docker volume rm <your project name>_pgadmin
 
 ## Tooling
 - Docker
-
-## Nick
-Apply migrations for Knex :
-```
-knex migrate:latest --env development
-```
-
-If you would like our Seed Data (1 Demo, 9 Demo Entries) run the following:
-```
-knex seed:run --env development
-```
