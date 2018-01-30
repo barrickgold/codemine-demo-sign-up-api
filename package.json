@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "nodemon ./src/server/index.js"
+    "start": "nodemon ./src/server/index.js",
+    "migrate:latest": "knex migrate:latest",
+    "seed:latest": "knex seed:run"
   },
   "repository": {
     "type": "git",

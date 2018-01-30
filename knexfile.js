@@ -1,5 +1,7 @@
 const path = require('path');
 
+require('dotenv').config();
+
 const host = process.env.POSTGRES_HOST || 'localhost';
 const port = process.env.POSTGRES_PORT || 5432;
 const user = process.env.POSTGRES_USER;

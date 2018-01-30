@@ -19,14 +19,14 @@ If you are using PGAdmin4 for the first time (or after removing the volume), you
 
 Table structure is set up through Knex, you will need to run the following to ensure the schema.
 
-Apply migrations for Knex :
+Apply Database migration:
 ```
-knex migrate:latest --env development
+npm run migrate:latest 
 ```
 
 If you would like our Seed Data (1 Demo, 9 Demo Entries) run the following:
 ```
-knex seed:run --env development
+npm run seed:latest
 ```
 
 ## Stopping
