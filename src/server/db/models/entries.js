@@ -1,83 +1,91 @@
-const queries = require('../queries/demo_entries');
-
-class Entries {
-    
-    async getAll(id){
-        const sql = await queries.getAllDemoEntries(id);
-        const entries = sql.map((entry) =>{
-          return {
-            id: entry.demo_entry_id,
-            demoId: entry.demo_day_id,
-            name: entry.presenter_name,
-            title: entry.demo_title,
-            position: entry.position,
-            isDeleted: entry.is_deleted
-          }
+module.exports = (sequelize, DataTypes) => {
+    const Entries = sequelize.define('Entries', {
+      id: {
+        type: DataTypes.UUID,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      demoId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      position: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+    }, {
+      tableName: 'entries',
+      timestamps: false,
+    });
   
-        })
-
-        return entries;
+    Entries.associate = (models) => {
+      Entries.belongsTo(models.Demos, {
+        foreignKey: 'demoId',
+        onDelete: 'CASCADE',
+      });
     };
 
-    async getById(id, entryId){
-      const sql = await queries.getSingleDemoEntry(id, entryId);
-      
-      const entry = {
-        id: sql.demo_entry_id,
-        demoId: sql.demo_day_id,
-        name: sql.presenter_name,
-        title: sql.demo_title,
-        position: sql.position,
-        isDeleted: sql.is_deleted
-      };
-
-      return entry;
+    Entries.getAll = function (demoId) {
+      return this.findAll({
+        where: {
+          demoId,
+        },
+      })
     };
 
-    async add(entryObject){
-        const newEntry = await this.convertEntry(entryObject);
-        const sql = await queries.addEntry(newEntry);
-        const entry = {
-            id: sql[0].demo_entry_id,
-            demoId: sql[0].demo_day_id,
-            name: sql[0].presenter_name,
-            title: sql[0].demo_title,
-            position: sql[0].position,
-            isDeleted: sql[0].is_deleted
-        };
-  
-        return entry;
+    Entries.getById = function (demoId, id) {
+      return this.find(
+        {
+          where: {
+          id,
+          demoId,
+          },
+        }
+      )
     };
 
-    async update(entryObject){
-        console.log("beforeModel", entryObject);
-        const newEntry = await this.convertEntry(entryObject);
-        console.log("afterModel", newEntry);
-        const sql = await queries.updateEntry(newEntry);
-        const entry = {
-            id: sql[0].demo_entry_id,
-            demoId: sql[0].demo_day_id,
-            name: sql[0].presenter_name,
-            title: sql[0].demo_title,
-            position: sql[0].position,
-            isDeleted: sql[0].is_deleted
-        };
-  
-        return entry;
+    Entries.add = function (entryObject) {
+      return this.create(
+        {
+          demoId: entryObject.demoId,
+          name: entryObject.name,
+          title: entryObject.title,
+          position: entryObject.position,
+          isDeleted: entryObject.isDeleted
+        }
+      );
     };
 
-    async convertEntry(entryObject){
-        const entry =  {
-            demo_entry_id: entryObject.id,
-            demo_day_id: entryObject.demoId,
-            presenter_name: entryObject.name,
-            demo_title: entryObject.title,
-            position: entryObject.position,
-            is_deleted: entryObject.isDeleted
-        };
+    Entries.edit = async function (entryObject) {
+      const [count, updatedEntry] = await this.update(
+        {
+          demoId: entryObject.demoId,
+          name: entryObject.name,
+          title: entryObject.title,
+          position: entryObject.position,
+          isDeleted: entryObject.isDeleted
+        }, {
+          where: {
+            id: entryObject.id,
+          },
+          returning: true,
+        }
+      );
+      return updatedEntry;
+    };
   
-        return entry;
-    }
-}
-
-module.exports = new Entries();
+    return Entries;
+  };

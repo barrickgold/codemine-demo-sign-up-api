@@ -4,7 +4,7 @@ const router = require('koa-router')({
 
 // Nested routes - old URL Route no longer needed, demo_days is nesting this route
 
-const Entries = require('../db/models/entries');
+const { Entries } = require('../db/models');
 
 router.get(`/`, async (ctx) => {
     console.log(ctx.params);
@@ -53,8 +53,8 @@ router.get(`/`, async (ctx) => {
 
   router.put(`/:entry_id`, async (ctx) => {
     try {
-
-      const entry = await Entries.update(ctx.request.body);
+console.log(ctx.request.body);
+      const entry = await Entries.edit(ctx.request.body);
       if (entry) {
         ctx.status = 200;
         ctx.body = {

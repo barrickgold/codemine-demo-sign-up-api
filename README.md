@@ -3,6 +3,12 @@
 ## Running
 Copy `.env.example` to `.env` (git ignored by default) and make changes to it for your local stack.
 
+### First Time Set up
+You will need to have KNEX CLI set up locally
+```
+npm install knex@0.13.0 -g
+```
+
 ### Database
 For development purposes, we start our database stack with `docker-compose`. This will start a PostgreSQL instance and a PGAdmin4 (web ui) instance. The values you specify in your `.env` file will become the values PostgreSQL and PGAdmin4 operate with.
 
@@ -19,14 +25,10 @@ If you are using PGAdmin4 for the first time (or after removing the volume), you
 
 Table structure is set up through Knex, you will need to run the following to ensure the schema.
 
-Apply Database migration:
+Apply migrations and seed data:
 ```
-npm run migrate:latest 
-```
-
-If you would like our Seed Data (1 Demo, 9 Demo Entries) run the following:
-```
-npm run seed:latest
+npm run db:migrate
+npm run db:seed
 ```
 
 ## Stopping

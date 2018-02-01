@@ -1,51 +1,52 @@
-const queries = require('../queries/demo_days');
+module.exports = (sequelize, DataTypes) => {
+    const Demos = sequelize.define('Demos', {
+      id: {
+        primaryKey: true,
+        autoIncrement: true,
+        type: DataTypes.UUID,
+      },
+      date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+    }, {
+      tableName: 'demos',
+      timestamps: false,
+    });
 
-class Demos {
-    
-    async getAll(){
-        const sql = await queries.getAllDemoDays();
+  Demos.associate = (models) => {
+    Demos.hasMany(models.Entries, {
+      foreignKey: 'demoId',
+      as: 'entries',
+    });
+  };
 
-        const demos = sql.map((day) =>{
-          return {
-            id: day.demo_day_id,
-            date: day.demo_date
-          }
-  
-        })
+  Demos.getAll = function () {
+    return this.findAll({
+      include: [
+        { model: sequelize.models.Entries, as: 'entries' },
+      ],
+    });
+  };
 
-        return demos;
-    };
+  Demos.getById = function (id) {
+    return this.find({
+      where: {
+        id,
+      },
+      include: [
+        { model: sequelize.models.Entries, as: 'entries' },
+      ],
+    });
+  };
 
-    async getById(id){
-      const sql = await queries.getSingleDemoDay(id);
-      
-      const demo = {
-        id: sql.demo_day_id,
-        date: sql.demo_date
-      };
+  Demos.add = function (demoObject) {
+    return this.create(
+      {
+        date: demoObject.date
+      }
+    );
+  };
 
-      return demo;
-    };
-
-    async add(demoObject){
-      const newDemo = await this.convertDemo(demoObject);
-      const sql = await queries.addDemo(newDemo);
-      const demo = {
-        id: sql[0].demo_day_id,
-        date: sql[0].demo_date
-      };
-
-      return demo;
-    };
-
-    async convertDemo(demoObject){
-      const demo =  {
-        demo_date: demoObject.date
-      };
-
-      return demo;
-  }
-
-}
-
-module.exports = new Demos();
+  return Demos;
+};

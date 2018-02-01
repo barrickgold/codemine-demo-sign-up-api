@@ -6,8 +6,8 @@
   "scripts": {
     "test": "test",
     "start": "nodemon ./src/server/index.js",
-    "migrate:latest": "knex migrate:latest",
-    "seed:latest": "knex seed:run"
+    "db:migrate": "sequelize db:migrate",
+    "db:seed": "sequelize db:seed:all"
   },
   "repository": {
     "type": "git",
@@ -21,15 +21,17 @@
   },
   "homepage": "https://github.com/barrickgold/codemine-demo-sign-up-api#readme",
   "dependencies": {
-    "knex": "^0.13.0",
+    "dotenv": "^4.0.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
+    "koa-cors": "0.0.16",
     "koa-router": "^7.2.1",
-    "pg": "^7.1.2",
+    "pg": "^7.4.1",
+    "sequelize": "^4.32.2",
+    "sequelize-cli": "^3.2.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
-    "dotenv": "^4.0.0",
     "nodemon": "^1.14.11"
   }
 }

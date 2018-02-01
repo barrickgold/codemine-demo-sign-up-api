@@ -3,11 +3,10 @@ const router = require('koa-router')({
 });
 
 const entries = require('./demo_entries');
-const Demos = require('../db/models/demos');
+const { Demos } = require('../db/models');
 
 router.get('/', async (ctx) => {
   try {
-    
     const demos = await Demos.getAll();
     
     ctx.body = {
