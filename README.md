@@ -23,7 +23,7 @@ If you are using PGAdmin4 for the first time (or after removing the volume), you
 
 ### Creating tables and seeding data
 
-Table structure is set up through Knex, you will need to run the following to ensure the schema.
+Table structure is set up through Sequelize, you will need to run the following to ensure the schema.
 
 Apply migrations and seed data:
 ```
