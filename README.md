@@ -4,9 +4,9 @@
 Copy `.env.example` to `.env` (git ignored by default) and make changes to it for your local stack.
 
 ### First Time Set up
-You will need to have KNEX CLI set up locally
+To pull in the dependencies, you need to install the app first
 ```
-npm install knex@0.13.0 -g
+npm install
 ```
 
 ### Database
@@ -30,6 +30,12 @@ Apply migrations and seed data:
 npm run db:migrate
 npm run db:seed
 ```
+## Start the app
+Finally, to start the application
+```
+npm start
+```
+
 
 ## Stopping
 
